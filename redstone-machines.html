@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft 1.8 Redstone Machines - Step by Step Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #FF1493;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #FF1493;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: #404040;
+            color: #FF1493;
+            border: 2px solid #FF1493;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #FF1493;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .nav-btn.active {
+            background: #FF1493;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .machine {
+            display: none;
+        }
+
+        .machine.active {
+            display: block;
+        }
+
+        .machine-title {
+            color: #FF1493;
+            font-size: 2em;
+            border-bottom: 2px solid #FF1493;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-easy {
+            background: #228B22;
+            color: #fff;
+        }
+
+        .difficulty-medium {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .difficulty-hard {
+            background: #FF4500;
+            color: #fff;
+        }
+
+        .section {
+            background: #2a2a2a;
+            border: 2px solid #FF1493;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #FF1493;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #FF1493;
+            padding-bottom: 10px;
+        }
+
+        .step {
+            background: #1a1a1a;
+            border-left: 4px solid #FF1493;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .step-number {
+            color: #FF1493;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .step-diagram {
+            background: #0a0a0a;
+            border: 1px solid #555;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .materials {
+            background: #1a1a1a;
+            border: 2px solid #4169E1;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .materials-title {
+            color: #4169E1;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .material-item {
+            color: #fff;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .material-item:before {
+            content: "▶ ";
+            color: #4169E1;
+            font-weight: bold;
+        }
+
+        .tips {
+            background: #1a1a1a;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tips-title {
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tip {
+            color: #fff;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .tip:before {
+            content: "💡 ";
+            margin-right: 5px;
+        }
+
+        .warning {
+            background: #1a1a1a;
+            border: 2px solid #FF4500;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .warning-title {
+            color: #FF4500;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .warning-text {
+            color: #fff;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .warning-text:before {
+            content: "⚠ ";
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .machine-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔴 MINECRAFT 1.8 REDSTONE MACHINES 🔴</h1>
+        <p>Complete Step-by-Step Guides</p>
+    </div>
+
+    <div class="container">
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showMachine('door-opener')">🚪 Auto Door</button>
+            <button class="nav-btn" onclick="showMachine('piston-door')">🔶 Piston Door</button>
+            <button class="nav-btn" onclick="showMachine('trap')">⚡ Trap System</button>
+            <button class="nav-btn" onclick="showMachine('grinder')">🔪 Mob Grinder</button>
+            <button class="nav-btn" onclick="showMachine('farm')">🌾 Auto Farm</button>
+            <button class="nav-btn" onclick="showMachine('elevator')">⬆️ Elevator</button>
+        </div>
+
+        <!-- AUTO DOOR OPENER -->
+        <div id="door-opener" class="machine active">
+            <div class="machine-title">🚪 AUTOMATIC DOOR OPENER</div>
+            <span class="difficulty difficulty-easy">Easy - 5 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">1 Wooden Door</div>
+                <div class="material-item">2 Pressure Plates (Wooden or Stone)</div>
+                <div class="material-item">2 Redstone Dust</div>
+                <div class="material-item">4 Redstone Torches</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Prepare the Area</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Find a flat area and clear a 5×5 space for your door system.</div>
+                    <div class="step-diagram">
+        ■ ■ ■ ■ ■
+        ■ . . . ■
+        ■ . D . ■
+        ■ . . . ■
+        ■ ■ ■ ■ ■
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Place the Door</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Place your wooden door in the center of your cleared space. The door frame should be 2 blocks tall.</div>
+                    <div class="step-diagram">
+        FRONT VIEW:        SIDE VIEW:
+        ┌─────┐             ┌─────┐
+        │     │             │ D D │
+        │  D  │             │ D D │
+        │     │             └─────┘
+        └─────┘
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Place Pressure Plates</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Place one pressure plate on EACH side of the door (in front and behind). The player steps on either plate to activate.</div>
+                    <div class="step-diagram">
+        FRONT:  P . . . P
+                . . D . .
+                . . D . .
+        BACK:   P (pressure plates on front and back)
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Run Redstone Dust</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Place redstone dust from each pressure plate to the door. Connect the dust trails so they meet at the door's base.</div>
+                    <div class="step-diagram">
+        R = Redstone Dust
+        
+        P - R - D - R - P
+            |       |
+            R-------R
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Add Redstone Torches</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Place redstone torches on the blocks adjacent to the door to amplify the signal and trigger the door mechanism.</div>
+                    <div class="step-diagram">
+        T = Redstone Torch
+        
+        P - R - T D T - R - P
+                (door)
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Use stone pressure plates to only trigger for players, not mobs</div>
+                <div class="tip">Add more pressure plates on different sides for different entry points</div>
+                <div class="tip">Place the door flush with walls for a seamless look</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Don't place redstone directly on the door block - place it beside it</div>
+                <div class="warning-text">Make sure pressure plates are connected with redstone dust</div>
+                <div class="warning-text">The door needs power on BOTH sides to work properly</div>
+            </div>
+        </div>
+
+        <!-- PISTON DOOR -->
+        <div id="piston-door" class="machine">
+            <div class="machine-title">🔶 2×2 PISTON DOOR</div>
+            <span class="difficulty difficulty-medium">Medium - 15 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">4 Pistons</div>
+                <div class="material-item">4 Sticky Pistons</div>
+                <div class="material-item">4 Blocks (any material for door panels)</div>
+                <div class="material-item">1 Redstone Repeater (set to 3 ticks)</div>
+                <div class="material-item">12 Redstone Dust</div>
+                <div class="material-item">2 Pressure Plates OR 1 Button/Lever</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Build the Door Frame</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Create a 2×2 frame where your door will be. This is where the pistons will push blocks through.</div>
+                    <div class="step-diagram">
+        TOP VIEW:
+        ╔═══╗
+        ║ ║ ║
+        ║   ║
+        ║ ║ ║
+        ╚═══╝
+        
+        Door opening = 2×2 blocks
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Place Pistons Around Door</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Place 4 regular pistons around the door opening. Place 4 sticky pistons ABOVE the regular pistons.</div>
+                    <div class="step-diagram">
+        SIDE VIEW:
+        ╔════════╗
+        ║ SP SP  ║  (Sticky Pistons on top)
+        ║  P  P  ║  (Regular Pistons)
+        ║        ║
+        ║  DOOR  ║
+        ║        ║
+        ╚════════╝
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Add Door Blocks</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Place 4 blocks on top of the sticky pistons. These will be pushed out to form the 2×2 door.</div>
+                    <div class="step-diagram">
+        BLOCKS ARRANGEMENT:
+        [B] [B]
+        [SP][SP]
+        [P] [P]
+        
+        Where: B = Block, SP = Sticky Piston, P = Piston
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Route Redstone</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Run redstone dust from your activation source (button/pressure plate) to all 8 pistons in a line.</div>
+                    <div class="step-diagram">
+        REDSTONE PATH (top view):
+        Button → R → R → R → R
+                    ↓
+                Pistons (all powered)
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Add Repeater for Timing</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Place a repeater set to 3 ticks delay in the redstone line. This ensures all pistons activate at the correct time.</div>
+                    <div class="step-diagram">
+        Button → R → [Repeater: 3 ticks] → R → Pistons
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 6: Add Activation Switch</div>
+                <div class="step">
+                    <div class="step-number">Step 6</div>
+                    <div class="step-description">Place a button, lever, or pressure plate to activate the system. When activated, pistons push blocks to open/close the door.</div>
+                    <div class="step-diagram">
+        BUTTON PLACEMENT:
+        [BUTTON] → Redstone → [Piston Door]
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Use a lever for toggle doors or buttons for single-use</div>
+                <div class="tip">Add decorative blocks around pistons for better aesthetics</div>
+                <div class="tip">Use different block materials to match your building style</div>
+                <div class="tip">Add lighting inside the door opening for atmosphere</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Don't mix regular and sticky pistons incorrectly</div>
+                <div class="warning-text">Ensure all pistons receive power at the same time</div>
+                <div class="warning-text">Make sure blocks can freely move in and out</div>
+            </div>
+        </div>
+
+        <!-- TRAP SYSTEM -->
+        <div id="trap" class="machine">
+            <div class="machine-title">⚡ PRESSURE PLATE TRAP SYSTEM</div>
+            <span class="difficulty difficulty-medium">Medium - 10 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">2 Pressure Plates</div>
+                <div class="material-item">1 Piston</div>
+                <div class="material-item">1 Redstone Repeater (set to 1 tick)</div>
+                <div class="material-item">8 Redstone Dust</div>
+                <div class="material-item">2 Redstone Torches</div>
+                <div class="material-item">1 Block (sand, gravel, or concrete)</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Dig the Trap Floor</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Dig a 3×3 hole that is 2 blocks deep. This will be where the trap is triggered.</div>
+                    <div class="step-diagram">
+        TOP VIEW:
+        ┌─────┐
+        │ ■ ■ │
+        │ ■ ■ │
+        │ ■ ■ │
+        └─────┘
+        
+        2 blocks deep
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Place Pressure Plates</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Place one pressure plate on the bottom of the hole and one on top. Cover the bottom one with sand/gravel so it's hidden.</div>
+                    <div class="step-diagram">
+        TRAP LAYOUT:
+        ┌────────────┐
+        │ Pressure   │ ← Visible (top)
+        │   Plate    │
+        │ SAND/DIRT  │ ← Hidden beneath
+        │ Pressure   │ ← Bottom trigger
+        │   Plate    │
+        └────────────┘
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Build Redstone Circuit</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Connect the bottom pressure plate to a redstone line. Run it to a repeater, then to the piston mechanism.</div>
+                    <div class="step-diagram">
+        CIRCUIT PATH:
+        Pressure Plate → R → [Repeater] → R → Piston
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Set Up Piston Mechanism</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Place a piston facing UPWARD beneath the sand/gravel layer. When activated, it will push the block upward, triggering the top plate.</div>
+                    <div class="step-diagram">
+        PISTON SETUP (side view):
+        ┌──────────┐
+        │ Sand     │ ← Will be pushed up
+        │ Piston ↑ │ ← Pushes sand up
+        │          │
+        └──────────┘
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Add Trigger Mechanism</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Connect the top pressure plate to a final redstone circuit that triggers your trap (falling sand, suffocation, or other damage).</div>
+                    <div class="step-diagram">
+        TRAP ACTIVATION:
+        Top Plate → R → Final Trap Mechanism
+        
+        Could be: Suffocation, Falling Damage, or Custom Trap
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Use falling sand/gravel for suffocation damage</div>
+                <div class="tip">Add a delay with repeaters to give players a chance to escape</div>
+                <div class="tip">Camouflage the trap with natural-looking blocks</div>
+                <div class="tip">Test the trap on animals before using on players</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Make sure the bottom pressure plate is accessible only to enemies</div>
+                <div class="warning-text">Don't make the trap too obvious or players will avoid it</div>
+                <div class="warning-text">Test timing carefully to ensure proper activation</div>
+            </div>
+        </div>
+
+        <!-- MOB GRINDER -->
+        <div id="grinder" class="machine">
+            <div class="machine-title">🔪 AUTOMATIC MOB GRINDER</div>
+            <span class="difficulty difficulty-hard">Hard - 30 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">16 Pistons</div>
+                <div class="material-item">32 Redstone Dust</div>
+                <div class="material-item">4 Repeaters (set to different ticks)</div>
+                <div class="material-item">4 Levers or Buttons</div>
+                <div class="material-item">Many building blocks</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Build the Collection Chamber</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Create a large chamber (8×8×4) where mobs will be collected. This should be dark to spawn mobs.</div>
+                    <div class="step-diagram">
+        TOP VIEW:
+        ╔════════╗
+        ║ ░░░░░░ ║
+        ║ ░░░░░░ ║
+        ║ ░░░░░░ ║
+        ║ ░░░░░░ ║
+        ╚════════╝
+        
+        ░ = Dark spawn area
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Create the Killing Floor</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Build a separate chamber below the collection area. This is where mobs will be killed (damage by fall or other means).</div>
+                    <div class="step-diagram">
+        SIDE VIEW:
+        ┌────────┐
+        │ Mobs   │ ← Collection
+        │ here   │
+        ├────────┤ ← 5+ block drop
+        │ DANGER │ ← Killing area
+        │ ZONE   │
+        └────────┘
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Install Pusher Pistons</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Install pistons on 3 sides of the collection chamber, all facing inward. These will push mobs together toward the drop hole.</div>
+                    <div class="step-diagram">
+        TOP VIEW (Pistons marked with arrows):
+        ╔══════════╗
+        ║ → Mobs ← ║
+        ║ ↓      ↓ ║
+        ║ ↓Hole↓ ↓ ║
+        ╚══════════╝
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Create Drop Hole</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Place a 2×2 hole in the center of the collection chamber floor where mobs will fall to their death (5+ blocks for damage).</div>
+                    <div class="step-diagram">
+        DROP HOLE:
+        ╔═══════╗
+        ║ ░ ░ ░ ║
+        ║ ░ ░ ░ ║
+        ║ ░ ░ ░ ║
+        ║ ░[◇◇]░ ║
+        ║ ░[◇◇]░ ║
+        ║ └─────┘
+        
+        ◇ = 2×2 hole
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Wire Pistons to Repeaters</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Connect all pusher pistons to repeaters set at different delays (1, 2, 3, 4 ticks). This staggers the piston pushes.</div>
+                    <div class="step-diagram">
+        REPEATER SETUP:
+        Button → [Repeater 1] → Pistons Group A
+             → [Repeater 2] → Pistons Group B
+             → [Repeater 3] → Pistons Group C
+             → [Repeater 4] → Pistons Group D
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 6: Test and Activate</div>
+                <div class="step">
+                    <div class="step-number">Step 6</div>
+                    <div class="step-description">Activate the system with a lever. Mobs should be pushed toward center and fall through the hole to take damage.</div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Make the chamber completely dark (light level 0) to maximize mob spawning</div>
+                <div class="tip">Use repeaters with staggered delays for smoother mob movement</div>
+                <div class="tip">Place the killing area 5-20 blocks below for optimal damage</div>
+                <div class="tip">Add hoppers below to collect dropped items</div>
+                <div class="tip">Use a lever to toggle the grinder on/off as needed</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Collection chamber must be completely dark or mobs won't spawn</div>
+                <div class="warning-text">Don't make the drop too low (over 50 blocks = overkill)</div>
+                <div class="warning-text">Ensure no light leaks into the chamber</div>
+                <div class="warning-text">Test mob spawning rates before finalizing</div>
+            </div>
+        </div>
+
+        <!-- AUTO FARM -->
+        <div id="farm" class="machine">
+            <div class="machine-title">🌾 AUTOMATIC CROP FARM</div>
+            <span class="difficulty difficulty-medium">Medium - 20 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">4 Pistons</div>
+                <div class="material-item">1 Repeater (set to 2 ticks)</div>
+                <div class="material-item">12 Redstone Dust</div>
+                <div class="material-item">1 Lever</div>
+                <div class="material-item">Water Bucket</div>
+                <div class="material-item">Farmland blocks</div>
+                <div class="material-item">Hoppers (4)</div>
+                <div class="material-item">Chest</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Prepare the Farm Area</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Create a 10×10 flat area. Place water channels running through it to hydrate crops.</div>
+                    <div class="step-diagram">
+        WATER LAYOUT:
+        ╔══════════╗
+        ║ C C C C C║
+        ║ W C C C C║
+        ║ C C C C C║
+        ║ W C C C C║
+        ║ C C C C C║
+        ╚══════════╝
+        
+        C = Crop, W = Water
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Plant Crops</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Plant wheat, potatoes, carrots, or other crops in the farmland. Wait for them to fully grow.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Install Pistons for Harvesting</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Place 4 pistons in a line at ground level pointing toward the crops. These will break the mature crops.</div>
+                    <div class="step-diagram">
+        PISTON PLACEMENT (top view):
+        [P] [P] [P] [P] → → →
+        
+        Pistons push toward crops
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Add Water Flushing System</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Place water flow channels below pistons. When pistons break crops, water will carry items to hoppers.</div>
+                    <div class="step-diagram">
+        WATER FLOW:
+        [Crops]
+        [Pistons] ↓
+        [Water] ↓ ↓ ↓ ↓
+        [Hoppers] → [Chest]
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Set Up Collection System</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Place 4 hoppers below the water channels, all connected to a central chest for item storage.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 6: Wire Redstone Circuit</div>
+                <div class="step">
+                    <div class="step-number">Step 6</div>
+                    <div class="step-description">Connect pistons to a repeater (set to 2 ticks) and then to a lever. Activate the lever to harvest.</div>
+                    <div class="step-diagram">
+        ACTIVATION:
+        [Lever] → R → [Repeater: 2 tick] → [Pistons]
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 7: Replanting (Optional)</div>
+                <div class="step">
+                    <div class="step-number">Step 7</div>
+                    <div class="step-description">To fully automate, you can set up a dispenser to replant seeds. Connect it to a clock circuit.</div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Use water channels to hydrate all crops (no manual watering needed)</div>
+                <div class="tip">Space pistons evenly across the farm for complete coverage</div>
+                <div class="tip">Use hoppers with filter systems to sort crops by type</div>
+                <div class="tip">Create a timer circuit to harvest on a schedule</div>
+                <div class="tip">Fully light the farm to prevent mob spawning</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Make sure water flows to hoppers, not away from them</div>
+                <div class="warning-text">Ensure crops are fully grown before harvesting</div>
+                <div class="warning-text">Don't forget to hydrate farmland (use water channels)</div>
+                <div class="warning-text">Check that hoppers are facing the correct direction</div>
+            </div>
+        </div>
+
+        <!-- ELEVATOR -->
+        <div id="elevator" class="machine">
+            <div class="machine-title">⬆️ PISTON-BASED ELEVATOR</div>
+            <span class="difficulty difficulty-hard">Hard - 40 min</span>
+
+            <div class="materials">
+                <div class="materials-title">📋 Materials Required:</div>
+                <div class="material-item">12 Sticky Pistons (per floor)</div>
+                <div class="material-item">4 Regular Pistons (per floor)</div>
+                <div class="material-item">4 Slime Blocks (or honey blocks)</div>
+                <div class="material-item">20+ Redstone Dust</div>
+                <div class="material-item">4 Repeaters (various delays)</div>
+                <div class="material-item">2 Buttons or Levers</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 1: Build the Elevator Column</div>
+                <div class="step">
+                    <div class="step-number">Step 1</div>
+                    <div class="step-description">Create a 3×3 vertical column that's 10-20 blocks tall. This will be your elevator shaft.</div>
+                    <div class="step-diagram">
+        SIDE VIEW:
+        ╔═══╗
+        ║ ░ ║  ← Top floor
+        ╠═══╣
+        ║ ░ ║  ← Elevator shaft
+        ║ ░ ║
+        ║ ░ ║
+        ║ ░ ║
+        ║ ░ ║
+        ║ ░ ║
+        ╚═══╝  ← Ground floor
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 2: Install Sticky Pistons</div>
+                <div class="step">
+                    <div class="step-number">Step 2</div>
+                    <div class="step-description">Place sticky pistons on all 4 sides of the column, pointing inward. Repeat this pattern every 3 blocks vertically.</div>
+                    <div class="step-diagram">
+        STICKY PISTON PATTERN (top view):
+        ╔═══════╗
+        ║ → ← ║
+        ║ ↑   ↓ ║
+        ║   [S]  ║
+        ║ ↓   ↑ ║
+        ║ ← → ║
+        ╚═══════╝
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 3: Add Slime Blocks</div>
+                <div class="step">
+                    <div class="step-number">Step 3</div>
+                    <div class="step-description">Place slime blocks attached to the sticky pistons. These will be what you stand on inside the elevator.</div>
+                    <div class="step-diagram">
+        SLIME PLACEMENT:
+        ╔═══╗
+        ║[S]║  ← Slime block (player stands here)
+        ║ █ ║
+        ║ █ ║
+        ║[S]║  ← Next slime block
+        ╚═══╝
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 4: Create Activation Switches</div>
+                <div class="step">
+                    <div class="step-number">Step 4</div>
+                    <div class="step-description">Place buttons at the bottom and top of the elevator. Pressing them should move the elevator up or down.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 5: Wire the Redstone</div>
+                <div class="step">
+                    <div class="step-number">Step 5</div>
+                    <div class="step-description">Connect buttons to repeaters set at staggered delays (1, 2, 3, 4 ticks). This synchronized piston activation creates smooth movement.</div>
+                    <div class="step-diagram">
+        CIRCUIT (simplified):
+        [Button UP] → [R:1] → Piston Group 1
+                 → [R:2] → Piston Group 2
+                 → [R:3] → Piston Group 3
+                 → [R:4] → Piston Group 4
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Step 6: Test Movement</div>
+                <div class="step">
+                    <div class="step-number">Step 6</div>
+                    <div class="step-description">Press the buttons to test. Pistons should extend/retract in sequence, moving the elevator up/down smoothly.</div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">💡 Tips for Better Performance:</div>
+                <div class="tip">Use honey blocks instead of slime for quieter operation</div>
+                <div class="tip">Create multiple elevator shafts for better performance in servers</div>
+                <div class="tip">Add decorative blocks around the shaft for aesthetics</div>
+                <div class="tip">Use repeaters with different delays for smooth acceleration/deceleration</div>
+                <div class="tip">Add lighting inside the shaft to prevent mob spawning</div>
+            </div>
+
+            <div class="warning">
+                <div class="warning-title">⚠ Common Mistakes:</div>
+                <div class="warning-text">Don't forget to attach slime blocks to sticky pistons</div>
+                <div class="warning-text">Ensure all pistons activate with proper timing delays</div>
+                <div class="warning-text">Make the shaft exactly 3×3 for optimal piston coverage</div>
+                <div class="warning-text">Test thoroughly to avoid getting stuck mid-elevator</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showMachine(machineId) {
+            document.querySelectorAll('.machine').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(machineId).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
